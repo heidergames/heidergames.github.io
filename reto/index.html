@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flap Wars · Reto</title>
+<meta property="og:title" content="¡Te retaron en Flap Wars!">
+<meta property="og:description" content="Mismo recorrido, mismo reto. ¿Lo superas?">
+<meta property="og:image" content="https://heidergames.github.io/portada.jpg">
+<link rel="icon" href="/icono.png">
+<style>
+:root{--bg:#0f1b3d;--card:#16285a;--gold:#ffc83d;--green:#3ccf4e;--txt:#fff;--muted:#b9c6ea}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#2a4aa8,var(--bg) 70%);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;align-items:center;justify-content:center;padding:16px}
+.card{width:100%;max-width:420px;background:var(--card);border:3px solid var(--gold);border-radius:24px;padding:28px 20px;text-align:center;box-shadow:0 12px 40px #0008}
+img.logo{width:96px;height:96px;border-radius:22px}
+h1{font-size:26px;margin:14px 0 6px}
+.score{font-size:64px;font-weight:900;color:var(--gold);line-height:1;margin:10px 0}
+p{color:var(--muted);margin:6px 0 18px;font-size:16px}
+a.btn{display:block;background:var(--green);color:#fff;text-decoration:none;font-weight:800;font-size:20px;padding:16px;border-radius:16px;margin:10px 0;box-shadow:0 4px 0 #1f8a2c}
+a.btn.alt{background:#2f56c9;box-shadow:0 4px 0 #1d3a8f;font-size:17px}
+.code{font-family:ui-monospace,monospace;font-size:20px;letter-spacing:2px;background:#0b1430;border-radius:10px;padding:10px;margin-top:8px;user-select:all}
+small{color:var(--muted);display:block;margin-top:14px}
+</style>
+</head>
+<body>
+<main class="card">
+  <img class="logo" src="/icono.png" alt="Flap Wars">
+  <h1 id="t1">¡Te retaron en Flap Wars!</h1>
+  <div class="score" id="score">?</div>
+  <p id="t2">Mismo recorrido, mismo reto. ¿Lo superas?</p>
+  <a class="btn" id="open">Aceptar el reto</a>
+  <a class="btn alt" id="store">Descargar Flap Wars</a>
+  <small id="t3">Si ya tienes el juego, abre Flap Wars → Reta a un amigo → "Tengo un código":</small>
+  <div class="code" id="code">—</div>
+</main>
+<script>
+(function(){
+  var L={
+    es:{t1:"¡Te retaron en Flap Wars!",t2:"Mismo recorrido, mismo reto. ¿Lo superas?",open:"Aceptar el reto",store:"Descargar Flap Wars",t3:"Si ya tienes el juego, abre Flap Wars → Reta a un amigo → \"Tengo un código\":",pts:" puntos"},
+    en:{t1:"You've been challenged in Flap Wars!",t2:"Same course, same challenge. Can you beat it?",open:"Accept the challenge",store:"Get Flap Wars",t3:"Already have the game? Open Flap Wars → Challenge a friend → \"I have a code\":",pts:" points"},
+    pt:{t1:"Você foi desafiado no Flap Wars!",t2:"Mesmo percurso, mesmo desafio. Consegue superar?",open:"Aceitar o desafio",store:"Baixar Flap Wars",t3:"Já tem o jogo? Abra o Flap Wars → Desafie um amigo → \"Tenho um código\":",pts:" pontos"}
+  };
+  var lang=(navigator.language||"es").slice(0,2); if(!L[lang]) lang="en"; var T=L[lang];
+  document.documentElement.lang=lang;
+  ["t1","t2","t3","open","store"].forEach(function(k){document.getElementById(k).textContent=T[k];});
+  var q=new URLSearchParams(location.search);
+  var c=(q.get("c")||"").replace(/[^A-Za-z0-9]/g,"").toUpperCase().slice(0,24);
+  var s=parseInt(q.get("s")||"",10);
+  document.getElementById("score").textContent=isNaN(s)?"?":(s+T.pts);
+  document.getElementById("code").textContent=c||"—";
+  var pkg="com.heidergames.flapwars";
+  var store="https://play.google.com/store/apps/details?id="+pkg+(c?"&referrer="+encodeURIComponent("reto="+c+"&utm_source=reto_amigo"):"");
+  document.getElementById("store").href=store;
+  var intent="intent://heidergames.github.io/reto/?c="+encodeURIComponent(c)+"#Intent;scheme=https;package="+pkg+";S.browser_fallback_url="+encodeURIComponent(store)+";end";
+  document.getElementById("open").href=/Android/i.test(navigator.userAgent)?intent:store;
+})();
+</script>
+</body>
+</html>

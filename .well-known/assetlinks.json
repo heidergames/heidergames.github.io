@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.heidergames.flapwars",
+      "sha256_cert_fingerprints":
+        ["46:15:BA:2D:58:8B:E2:BC:F0:5D:78:07:04:A5:4F:E5:D6:D0:6F:49:F1:C0:9E:D8:D6:1E:16:66:10:17:09:45"]
+    }
+  }
+]
